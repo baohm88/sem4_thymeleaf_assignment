@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout(pageTitle='Danh sách Công ty', content=~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Danh sách Công ty</h2>
+        <a class="btn btn-success" th:href="@{/companies/new}">➕ Thêm Công ty</a>
+    </div>
+
+    <!-- ✅ Flash messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-1"></i>
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i>
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- ✅ Company table -->
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-bordered table-hover align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên công ty</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Website</th>
+                    <th scope="col" class="text-center" style="width: 160px;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="company, iter : ${companies}">
+                    <td th:text="${iter.count}"></td>
+                    <td th:text="${company.name}"></td>
+                    <td th:text="${company.address}"></td>
+                    <td th:text="${company.email}"></td>
+                    <td>
+                        <a th:if="${company.website != null and !#strings.isEmpty(company.website)}"
+                           th:href="${company.website}"
+                           th:text="${company.website}" target="_blank"></a>
+                        <span th:if="${company.website == null or #strings.isEmpty(company.website)}">—</span>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-sm btn-primary me-1"
+                           th:href="@{/companies/edit/{id}(id=${company.id})}">
+                            ✏️ Sửa
+                        </a>
+                        <a class="btn btn-sm btn-danger"
+                           th:href="@{/companies/delete/{id}(id=${company.id})}"
+                           onclick="return confirm('Bạn chắc chắn muốn xóa công ty này?')">
+                            🗑️ Xóa
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(companies)}">
+                    <td colspan="6" class="text-center text-muted py-3">Không có công ty nào.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>
+
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</body>
+</html>
