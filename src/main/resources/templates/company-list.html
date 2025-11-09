@@ -5,10 +5,10 @@
 <th:block th:fragment="content">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Danh sách Công ty</h2>
-        <a class="btn btn-success" th:href="@{/companies/new}">➕ Thêm Công ty</a>
+        <a class="btn btn-primary" th:href="@{/companies/new}"><i class="bi bi-plus-circle-dotted"></i> Thêm Công ty</a>
     </div>
 
-    <!-- ✅ Flash messages -->
+    <!-- Flash messages -->
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle-fill me-1"></i>
         <span th:text="${successMessage}"></span>
@@ -21,51 +21,61 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <!-- ✅ Company table -->
-    <div class="card shadow-sm">
-        <div class="card-body p-0">
-            <table class="table table-bordered table-hover align-middle mb-0">
-                <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tên công ty</th>
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Website</th>
-                    <th scope="col" class="text-center" style="width: 160px;">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="company, iter : ${companies}">
-                    <td th:text="${iter.count}"></td>
-                    <td th:text="${company.name}"></td>
-                    <td th:text="${company.address}"></td>
-                    <td th:text="${company.email}"></td>
-                    <td>
-                        <a th:if="${company.website != null and !#strings.isEmpty(company.website)}"
-                           th:href="${company.website}"
-                           th:text="${company.website}" target="_blank"></a>
-                        <span th:if="${company.website == null or #strings.isEmpty(company.website)}">—</span>
-                    </td>
-                    <td class="text-center">
-                        <a class="btn btn-sm btn-primary me-1"
-                           th:href="@{/companies/edit/{id}(id=${company.id})}">
-                            ✏️ Sửa
-                        </a>
-                        <a class="btn btn-sm btn-danger"
-                           th:href="@{/companies/delete/{id}(id=${company.id})}"
-                           onclick="return confirm('Bạn chắc chắn muốn xóa công ty này?')">
-                            🗑️ Xóa
-                        </a>
-                    </td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(companies)}">
-                    <td colspan="6" class="text-center text-muted py-3">Không có công ty nào.</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div th:if="${#lists.isEmpty(companies)}" class="alert alert-warning">
+        Chưa có công ty nào được tạo.
     </div>
+    <div th:unless="${#lists.isEmpty(companies)}">
+        <!-- Company table -->
+        <div class="card shadow-sm p-3">
+            <div class="card-body p-3">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên công ty</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Website</th>
+                        <th scope="col" class="text-center" style="width: 160px;">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="company, iter : ${companies}">
+                        <td th:text="${iter.count}"></td>
+                        <td th:text="${company.name}"></td>
+                        <td th:text="${company.address}"></td>
+                        <td th:text="${company.email}"></td>
+                        <td>
+                            <a th:if="${company.website != null and !#strings.isEmpty(company.website)}"
+                               th:href="${company.website}"
+                               th:text="${company.website}" target="_blank"></a>
+                            <span th:if="${company.website == null or #strings.isEmpty(company.website)}">—</span>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-warning btn-sm me-1"
+                               th:href="@{/companies/edit/{id}(id=${company.id})}"
+                               title="Sửa Công ty">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            |
+                            <a class="btn btn-danger btn-sm"
+                               th:href="@{/companies/delete/{id}(id=${company.id})}"
+                               title="Xoá Công ty"
+                               onclick="return confirm('Bạn chắc chắn muốn xóa công ty này?')">
+                                <i class="bi bi-trash3-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(companies)}">
+                        <td colspan="6" class="text-center text-muted py-3">Không có công ty nào.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
 </th:block>
 
 <!-- Bootstrap Icons CDN -->

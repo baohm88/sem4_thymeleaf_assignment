@@ -1,59 +1,10 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
-<!--      th:replace="~{layout(pageTitle=${company.id} != null ? 'Chỉnh sửa Công ty' : 'Thêm công ty mới', content=~{::content})}">-->
-<!--<body>-->
-<!--<body>-->
-<!--<th:block th:fragment="content">-->
-<!--    <div class="card shadow-sm">-->
-<!--        <div class="card-header bg-primary text-white">-->
-<!--            <h4 class="mb-0" th:text="${company.id} != null ? 'Chỉnh sửa Công ty' : 'Thêm công ty mới'"></h4>-->
-<!--        </div>-->
-<!--        <div class="card-body">-->
-<!--            <form th:action="@{${company.id} != null ? '/companies/update/' + ${company.id} : '/companies/save'}"-->
-<!--                  th:object="${company}" method="post" novalidate>-->
-
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">Tên công ty</label>-->
-<!--                    <input type="text" th:field="*{name}" class="form-control" placeholder="VD: FPT Software">-->
-<!--                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">Địa chỉ</label>-->
-<!--                    <input type="text" th:field="*{address}" class="form-control" placeholder="VD: Hà Nội, Việt Nam">-->
-<!--                    <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">Website</label>-->
-<!--                    <input type="text" th:field="*{website}" class="form-control" placeholder="VD: https://www.fpt.com.vn">-->
-<!--                    <div class="text-danger" th:if="${#fields.hasErrors('website')}" th:errors="*{website}"></div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">Email</label>-->
-<!--                    <input type="email" th:field="*{email}" class="form-control" placeholder="VD: hr@fpt.com.vn">-->
-<!--                    <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>-->
-<!--                </div>-->
-
-<!--                <div class="mt-4">-->
-<!--                    <button type="submit" class="btn btn-success">💾 Lưu</button>-->
-<!--                    <a th:href="@{/companies}" class="btn btn-secondary">⬅ Quay lại</a>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</th:block>-->
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout(pageTitle=${company.id} != null ? 'Chỉnh sửa Công ty' : 'Thêm công ty mới', content=~{::content})}">
 <body>
 <th:block th:fragment="content">
-    <!-- ✅ Flash messages -->
+    <a th:href="@{/companies}" class="btn btn-outline-secondary mb-2"><i class="bi bi-arrow-left-circle-fill"></i> Quay lại</a>
+    <!-- Flash messages -->
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle-fill me-1"></i>
         <span th:text="${successMessage}"></span>
@@ -66,7 +17,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm m-3">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0" th:text="${company.id} != null ? 'Chỉnh sửa Công ty' : 'Thêm công ty mới'"></h4>
         </div>
@@ -93,15 +44,19 @@
                     <div class="text-danger small mt-1" th:if="${#fields.hasErrors('website')}" th:errors="*{website}"></div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 ">
                     <label class="form-label fw-semibold">Email</label>
                     <input type="email" th:field="*{email}" class="form-control" placeholder="VD: hr@fpt.com.vn">
                     <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-success me-2">💾 Lưu</button>
-                    <a th:href="@{/companies}" class="btn btn-secondary">⬅ Quay lại</a>
+                    <button type="submit" class="btn btn-success me-2">
+                        <i class="bi bi-floppy-fill"></i> Lưu
+                    </button>
+                    <a th:href="@{/companies}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-circle-fill"></i> Huỷ
+                    </a>
                 </div>
             </form>
         </div>

@@ -30,12 +30,12 @@ public class JobPostingController {
         return "job-list";
     }
 
-    // 2️⃣ Form thêm mới — ✅ chặn nếu chưa có công ty nào
+    // 2️⃣ Form thêm mới — chặn nếu chưa có công ty nào
     @GetMapping("/new")
     public String showCreateForm(Model model, RedirectAttributes redirectAttributes) {
         if (companyRepository.count() == 0) {
             redirectAttributes.addFlashAttribute("errorMessage",
-                    "❌ Hiện chưa có công ty nào để đăng tuyển mới. Hãy thêm ít nhất 1 công ty trước.");
+                    "Hiện chưa có công ty nào để đăng tuyển mới. Hãy thêm ít nhất 1 công ty trước.");
             return "redirect:/companies";
         }
 
@@ -58,7 +58,7 @@ public class JobPostingController {
             return "job-form";
         }
 
-        // ✅ Lấy lại company thực từ DB (tránh lỗi Transient object)
+        // Lấy lại company thực từ DB (tránh lỗi Transient object)
         if (job.getCompany() != null && job.getCompany().getId() != null) {
             job.setCompany(companyRepository.findById(job.getCompany().getId()).orElse(null));
         }
@@ -71,7 +71,7 @@ public class JobPostingController {
         }
 
         jobPostingRepository.save(job);
-        redirectAttributes.addFlashAttribute("successMessage", "✅ Đăng tin tuyển dụng mới thành công!");
+        redirectAttributes.addFlashAttribute("successMessage", "Đăng tin tuyển dụng mới thành công!");
         return "redirect:/jobs";
     }
 
@@ -81,7 +81,7 @@ public class JobPostingController {
     public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         JobPosting job = jobPostingRepository.findById(id).orElse(null);
         if (job == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy tin tuyển dụng!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy tin tuyển dụng!");
             return "redirect:/jobs";
         }
         model.addAttribute("job", job);
@@ -105,11 +105,11 @@ public class JobPostingController {
 
         JobPosting existing = jobPostingRepository.findById(id).orElse(null);
         if (existing == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy tin tuyển dụng!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy tin tuyển dụng!");
             return "redirect:/jobs";
         }
 
-        // ✅ Lấy lại company thực từ DB
+        // Lấy lại company thực từ DB
         if (job.getCompany() != null && job.getCompany().getId() != null) {
             job.setCompany(companyRepository.findById(job.getCompany().getId()).orElse(null));
         }
@@ -125,7 +125,7 @@ public class JobPostingController {
         job.setCreatedAt(existing.getCreatedAt());
         jobPostingRepository.save(job);
 
-        redirectAttributes.addFlashAttribute("successMessage", "✅ Cập nhật tin tuyển dụng thành công!");
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật tin tuyển dụng thành công!");
         return "redirect:/jobs";
     }
 
@@ -135,9 +135,9 @@ public class JobPostingController {
     public String deleteJob(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (jobPostingRepository.existsById(id)) {
             jobPostingRepository.deleteById(id);
-            redirectAttributes.addFlashAttribute("successMessage", "🗑️ Đã xóa tin tuyển dụng!");
+            redirectAttributes.addFlashAttribute("successMessage", "Đã xóa tin tuyển dụng!");
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy tin tuyển dụng để xóa!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy tin tuyển dụng để xóa!");
         }
         return "redirect:/jobs";
     }
@@ -149,7 +149,7 @@ public class JobPostingController {
                                  RedirectAttributes redirectAttributes) {
         JobPosting job = jobPostingRepository.findById(id).orElse(null);
         if (job == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy tin tuyển dụng!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy tin tuyển dụng!");
             return "redirect:/jobs";
         }
         model.addAttribute("job", job);

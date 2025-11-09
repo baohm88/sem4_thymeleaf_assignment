@@ -41,7 +41,7 @@ public class CompanyController {
         }
 
         companyRepository.save(company);
-        redirectAttributes.addFlashAttribute("successMessage", "✅ Công ty đã được thêm mới thành công!");
+        redirectAttributes.addFlashAttribute("successMessage", "Công ty đã được thêm mới thành công!");
         return "redirect:/companies";
     }
 
@@ -52,7 +52,7 @@ public class CompanyController {
                 .orElse(null);
 
         if (company == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy công ty cần chỉnh sửa!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy công ty cần chỉnh sửa!");
             return "redirect:/companies";
         }
 
@@ -73,7 +73,7 @@ public class CompanyController {
 
         Company existing = companyRepository.findById(id).orElse(null);
         if (existing == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy công ty để cập nhật!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy công ty để cập nhật!");
             return "redirect:/companies";
         }
 
@@ -81,7 +81,7 @@ public class CompanyController {
         company.setCreatedAt(existing.getCreatedAt());
         companyRepository.save(company);
 
-        redirectAttributes.addFlashAttribute("successMessage", "✅ Cập nhật thông tin công ty thành công!");
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thông tin công ty thành công!");
         return "redirect:/companies";
     }
 
@@ -92,7 +92,7 @@ public class CompanyController {
             companyRepository.deleteById(id);
             redirectAttributes.addFlashAttribute("successMessage", "🗑️ Đã xóa công ty thành công!");
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "❌ Không tìm thấy công ty cần xóa!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy công ty cần xóa!");
         }
         return "redirect:/companies";
     }

@@ -4,6 +4,8 @@
 <body>
 <th:block th:fragment="content">
 
+    <a th:href="@{/jobs}" class="btn btn-outline-secondary mb-2"><i class="bi bi-arrow-left-circle-fill"></i> Quay lại</a>
+
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle-fill me-1"></i>
         <span th:text="${successMessage}"></span>
@@ -16,7 +18,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm m-3">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0" th:text="${job.id} != null ? 'Chỉnh sửa tin tuyển dụng' : 'Đăng tuyển mới'"></h4>
         </div>
@@ -33,7 +35,7 @@
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Mô tả công việc</label>
-                    <textarea th:field="*{description}" class="form-control" rows="5"
+                    <textarea th:field="*{description}" class="form-control" id="description" rows="5"
                               placeholder="Mô tả chi tiết công việc, yêu cầu, quyền lợi..."></textarea>
                     <div class="text-danger small" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                 </div>
@@ -71,13 +73,45 @@
                     </div>
                 </div>
 
+<!--                <div class="mt-4">-->
+<!--                    <button type="submit" class="btn btn-success me-2"><i class="bi bi-floppy-fill"></i> Lưu</button>-->
+<!--                    <a th:href="@{/jobs}" class="btn btn-outline-secondary mb-2"><i class="bi bi-arrow-left-circle-fill"></i> Huỷ</a>-->
+<!--                </div>-->
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-success me-2">💾 Lưu</button>
-                    <a th:href="@{/jobs}" class="btn btn-secondary">⬅ Quay lại</a>
+                    <button type="submit" class="btn btn-success me-2">
+                        <i class="bi bi-floppy-fill"></i> Lưu
+                    </button>
+                    <a th:href="@{/jobs}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-circle-fill"></i> Huỷ
+                    </a>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- ✅ CKEditor script (PHẢI có trước khi init) -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+
+    <!-- 🚀 Khởi tạo CKEditor -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            ClassicEditor
+                .create(document.querySelector('#description'), {
+                    toolbar: [
+                        'undo','redo','|','bold','italic','underline','|',
+                        'bulletedList','numberedList','|','link','blockQuote','|',
+                        'insertTable','alignment','|','heading','fontSize','fontColor'
+                    ],
+                    language: 'vi',
+                    height: '200px'      // hoặc '250px' tùy ý
+                })
+                .then(editor => {
+                    // Một số build không hỗ trợ height trực tiếp, ta chỉnh bằng CSS:
+                    editor.ui.view.editable.element.style.minHeight = '200px';
+                })
+                .catch(console.error);
+        });
+    </script>
 </th:block>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">

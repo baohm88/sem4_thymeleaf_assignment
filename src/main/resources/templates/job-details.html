@@ -1,71 +1,183 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="vi" xmlns:th="http://www.thymeleaf.org"-->
+<!--      th:replace="~{layout(pageTitle='Chi tiết tin tuyển dụng', content=~{::content})}">-->
+<!--<body>-->
+<!--<th:block th:fragment="content">-->
+
+<!--    <a th:href="@{/jobs}" class="btn btn-outline-secondary mb-2"><i class="bi bi-arrow-left-circle-fill"></i> Quay lại danh sách</a>-->
+<!--    <div class="card shadow-sm m-3">-->
+<!--        <div class="card-header bg-primary text-white">-->
+<!--            <h4 class="mb-0" th:text="${job.title}"></h4>-->
+<!--        </div>-->
+
+<!--        <div class="card-body">-->
+<!--            <div class="mb-3">-->
+<!--                <h5 class="fw-semibold text-secondary mb-2">🏢 Công ty</h5>-->
+<!--                <p class="fs-5 mb-1">-->
+<!--                    <strong th:text="${job.company.name}"></strong>-->
+<!--                </p>-->
+<!--                <p class="mb-1">-->
+<!--                    <i class="bi bi-geo-alt"></i>-->
+<!--                    <span th:text="${job.location}"></span>-->
+<!--                </p>-->
+<!--                <p class="mb-1">-->
+<!--                    <i class="bi bi-envelope"></i>-->
+<!--                    <a th:href="'mailto:' + ${job.company.email}" th:text="${job.company.email}"></a>-->
+<!--                </p>-->
+<!--                <p>-->
+<!--                    <i class="bi bi-globe"></i>-->
+<!--                    <a th:href="${job.company.website}" th:text="${job.company.website}" target="_blank"></a>-->
+<!--                </p>-->
+<!--            </div>-->
+
+<!--            <hr>-->
+
+<!--            <div class="row mb-3">-->
+<!--                <div class="col-md-6 mb-2">-->
+<!--                    <h6 class="fw-semibold text-secondary">Loại công việc</h6>-->
+<!--                    <span class="badge bg-info text-dark fs-6" th:text="${job.jobType.label}"></span>-->
+<!--                </div>-->
+<!--                <div class="col-md-6 mb-2">-->
+<!--                    <h6 class="fw-semibold text-secondary">Mức lương</h6>-->
+<!--                    <span class="fs-6 text-dark" th:text="${job.salary} ?: 'Thỏa thuận'"></span>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <h6 class="fw-semibold text-secondary">📅 Ngày đăng:</h6>-->
+<!--            <p th:text="${#temporals.format(job.postedDate, 'dd/MM/yyyy')}"></p>-->
+
+<!--            <hr>-->
+
+<!--            <h5 class="fw-semibold text-secondary">📝 Mô tả công việc</h5>-->
+<!--            <p class="fs-6" th:utext="${job.description}"></p>-->
+
+<!--            <div class="mt-4 d-flex justify-content-between flex-wrap">-->
+<!--                <div>-->
+<!--                    <a class="btn btn-warning btn-sm me-1"-->
+<!--                       th:href="@{/jobs/edit/{id}(id=${job.id})}"-->
+<!--                       title="Sửa tin tuyển dụng">-->
+<!--                        <i class="bi bi-pencil-square"></i>-->
+<!--                    </a>-->
+<!--                    |-->
+<!--                    <a class="btn btn-danger btn-sm"-->
+<!--                       th:href="@{/jobs/delete/{id}(id=${job.id})}"-->
+<!--                       title="Xoá tin tuyển dụng"-->
+<!--                       onclick="return confirm('Bạn chắc chắn muốn xóa tin này?')">-->
+<!--                        <i class="bi bi-trash3-fill"></i>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</th:block>-->
+
+<!--&lt;!&ndash; Bootstrap Icons &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout(pageTitle='Chi tiết tin tuyển dụng', content=~{::content})}">
 <body>
 <th:block th:fragment="content">
 
-    <div class="card shadow-sm mt-3">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0" th:text="${job.title}"></h4>
+    <!-- 🔙 Nút quay lại -->
+    <div class="mb-3">
+        <a th:href="@{/jobs}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left-circle-fill"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <!-- 🌟 Card chi tiết -->
+    <div class="card shadow-lg border-0 rounded-4 m-3">
+        <div class="card-header bg-gradient bg-primary text-white py-3">
+            <h3 class="mb-0 fw-semibold" th:text="${job.title}"></h3>
         </div>
 
-        <div class="card-body">
-            <div class="mb-3">
-                <h5 class="fw-semibold text-secondary mb-2">🏢 Công ty</h5>
-                <p class="fs-5 mb-1">
-                    <strong th:text="${job.company.name}"></strong>
-                </p>
-                <p class="mb-1">
-                    <i class="bi bi-geo-alt"></i>
-                    <span th:text="${job.location}"></span>
-                </p>
-                <p class="mb-1">
-                    <i class="bi bi-envelope"></i>
-                    <a th:href="'mailto:' + ${job.company.email}" th:text="${job.company.email}"></a>
-                </p>
-                <p>
-                    <i class="bi bi-globe"></i>
-                    <a th:href="${job.company.website}" th:text="${job.company.website}" target="_blank"></a>
-                </p>
-            </div>
+        <div class="card-body p-4">
 
-            <hr>
-
-            <div class="row mb-3">
-                <div class="col-md-6 mb-2">
-                    <h6 class="fw-semibold text-secondary">Loại công việc</h6>
-                    <span class="badge bg-info text-dark fs-6" th:text="${job.jobType.label}"></span>
+            <!-- 🏢 Thông tin công ty -->
+            <div class="d-flex align-items-start mb-4">
+                <div class="me-3">
+                    <i class="bi bi-buildings display-5 text-primary"></i>
                 </div>
-                <div class="col-md-6 mb-2">
-                    <h6 class="fw-semibold text-secondary">Mức lương</h6>
-                    <span class="fs-6 text-dark" th:text="${job.salary} ?: 'Thỏa thuận'"></span>
-                </div>
-            </div>
-
-            <h6 class="fw-semibold text-secondary">📅 Ngày đăng:</h6>
-            <p th:text="${#temporals.format(job.postedDate, 'dd/MM/yyyy')}"></p>
-
-            <hr>
-
-            <h5 class="fw-semibold text-secondary">📝 Mô tả công việc</h5>
-            <p class="fs-6" th:utext="${job.description}"></p>
-
-            <div class="mt-4 d-flex justify-content-between flex-wrap">
-                <a th:href="@{/jobs}" class="btn btn-secondary mb-2">⬅ Quay lại danh sách</a>
                 <div>
-                    <a class="btn btn-primary me-2"
-                       th:href="@{/jobs/edit/{id}(id=${job.id})}">✏️ Sửa</a>
-                    <a class="btn btn-danger"
-                       th:href="@{/jobs/delete/{id}(id=${job.id})}"
-                       onclick="return confirm('Bạn chắc chắn muốn xóa tin này?')">🗑️ Xóa</a>
+                    <h4 class="fw-bold mb-1 text-dark" th:text="${job.company.name}"></h4>
+                    <p class="text-muted mb-1">
+                        <i class="bi bi-geo-alt"></i>
+                        <span th:text="${job.location}"></span>
+                    </p>
+                    <p class="text-muted mb-1">
+                        <i class="bi bi-envelope"></i>
+                        <a th:href="'mailto:' + ${job.company.email}" th:text="${job.company.email}"></a>
+                    </p>
+                    <p class="text-muted mb-0">
+                        <i class="bi bi-globe"></i>
+                        <a th:href="${job.company.website}" th:text="${job.company.website}" target="_blank"></a>
+                    </p>
                 </div>
             </div>
+
+            <hr>
+
+            <!-- 💼 Thông tin chung -->
+            <div class="row text-center mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded-3 bg-light">
+                        <h6 class="text-secondary fw-semibold mb-1">Loại công việc</h6>
+                        <span class="badge bg-info text-dark fs-6 px-3 py-2" th:text="${job.jobType.label}"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded-3 bg-light">
+                        <h6 class="text-secondary fw-semibold mb-1">Mức lương</h6>
+                        <span class="fs-5 fw-bold text-success"
+                              th:text="${job.salary != null ? #numbers.formatInteger(job.salary, 3, 'COMMA') + ' VND' : 'Thỏa thuận'}"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded-3 bg-light">
+                        <h6 class="text-secondary fw-semibold mb-1">Ngày đăng</h6>
+                        <span class="fs-6" th:text="${#temporals.format(job.postedDate, 'dd/MM/yyyy')}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 📝 Mô tả công việc -->
+            <div>
+                <h5 class="fw-semibold text-secondary mb-3">📝 Mô tả công việc</h5>
+                <div class="fs-6 lh-lg" th:utext="${job.description}"></div>
+            </div>
+
+            <hr>
+
+            <!-- 🔧 Nút thao tác -->
+            <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+                <a class="btn btn-warning px-4"
+                   th:href="@{/jobs/edit/{id}(id=${job.id})}"
+                   title="Sửa tin tuyển dụng">
+                    <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                </a>
+
+                <a class="btn btn-danger px-4"
+                   th:href="@{/jobs/delete/{id}(id=${job.id})}"
+                   title="Xoá tin tuyển dụng"
+                   onclick="return confirm('Bạn chắc chắn muốn xóa tin này?')">
+                    <i class="bi bi-trash3-fill"></i> Xóa tin
+                </a>
+            </div>
+
         </div>
     </div>
 
 </th:block>
 
-<!-- Bootstrap Icons -->
+<!-- ✅ Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </body>
 </html>
